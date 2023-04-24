@@ -1,5 +1,6 @@
 import styles from "@/app/styles/common.module.css"
 import Image from "next/image"
+import Link from "next/link"
 
 const MovieDynamicRoute = async ({ params }) => {
     const id = params.id
@@ -25,9 +26,11 @@ const MovieDynamicRoute = async ({ params }) => {
     return (
         <>
             <div className={styles.container}>
-                <h2 className={styles.movie_title}>
-                    Netflix / <span> {movie.type} </span>
-                </h2>
+                <Link href={"/movie"}>
+                    <h2 className={styles.movie_title}>
+                        Netflix / <span> {movie.type} </span>
+                    </h2>
+                </Link>
                 <div className={styles.card_section}>
                     <div>
                         <Image src={movie.backgroundImage.url} alt={movie.title} height={250} width={200} />

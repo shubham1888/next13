@@ -3,6 +3,7 @@ import MovieCard from '../components/MovieCard';
 import styles from "@/app/styles/common.module.css"
 
 const Movie = async () => {
+  // await new Promise(resolve => setTimeout(() => resolve, 2000))
   const url = process.env.RAPID_API_KEY
   const options = {
     method: 'GET',
@@ -23,7 +24,7 @@ const Movie = async () => {
     console.error(error);
   }
   // console.log(movies)
-  console.log("A new request to rapidapi made")
+  console.log("A new request made to rapidapi")
 
   return (
     <>
