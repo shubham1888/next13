@@ -10,6 +10,7 @@ const mulish = Mulish({
 })
 
 const ContactForm = () => {
+    const [status, setStatus] = useState(null)
     const [userdata, setUserdata] = useState({
         username: "",
         email: "",
@@ -18,11 +19,34 @@ const ContactForm = () => {
     })
 
     const handleonchange = (e) => {
+        e.preventDefault()
         let name = e.target.name
         let val = e.target.value
         setUserdata((prevData) => ({ ...prevData, [name]: val }))
     }
-    const handlesubmit = () => {
+    const handlesubmit = async () => {
+        try {
+            let url = "/api/contact"
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userdata), // body data type must match "Content-Type" header
+            });
+            // let res = await response.json(); // parses JSON response into native JavaScript object
+            if (response.status === 200) {
+                setUserdata({
+                    username: "",
+                    email: "",
+                    phone: "",
+                    message: ""
+                })
+                setStatus("success")
+            } else {
+                setStatus("error")
+            }
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     return (
@@ -85,6 +109,8 @@ const ContactForm = () => {
                 </label>
             </div>
             <div style={{ "display": "flex", "justifyContent": "center" }}>
+                {status === "success" && <p className={styles.success_msg}>Thank you for your message.</p>}
+                {status === "error" && <p className={styles.error_msg}>There was an error occoured.</p>}
                 <button type="submit" className={mulish.className}>Send</button>
             </div>
         </form>
